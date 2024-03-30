@@ -1,11 +1,10 @@
-import express from "express"
-
-
-const app= express()
+import app from "./apps/index.js";
 
 
 
-console.log("test")
-app.listen(8000,()=>{
-    console.log("server run at http://localhost:8000")
+
+
+/// listening express
+app.listen(process.env.PORT,()=>{
+    console.log("server is listening on port " + process.env.PORT)
 })

@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 // import compression from "compression";
 // import fileUpload from "express-fileupload";
-// import cors from "cors";
+import cors from "cors";
 // import createHttpError from "http-errors";
 import routers from "../routes/index.js";
 
@@ -49,12 +49,13 @@ app.use(cookieParser());
 //   })
 // );
 
-// ///  cors
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//   })
-// );
+///  cors
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials:true
+  })
+);
 
 ///  routes
 app.use("/api/v1", routers);

@@ -6,12 +6,19 @@ export const register = async (req, res) => {
     const { username, email, password } = req.body;
     try {
 
-        const user = await prisma.user.findUnique({
-          where: { email },
-        });
+        
+      const emailF = await prisma.user.findUnique({
+        where: { email },
+      });
 
-        if (user)
-          return res.status(400).json({ message: "Email Exists!" });
+      if (emailF) return res.status(400).json({ message: "Email Exists! Try with another email" });
+      const usernameF = await prisma.user.findUnique({
+        where: { username },
+      });
+
+      if (usernameF) return res
+        .status(400)
+        .json({ message: "Username Exists! Try with another username" });
       // HASH THE PASSWORD
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -27,6 +34,7 @@ export const register = async (req, res) => {
 
       res.status(201).json({ message: "User created successfully" });
     } catch (err) {
+      console.log(err)
       res.status(500).json({ message: "Failed to create user!" });
     }
 };
@@ -41,7 +49,6 @@ export const login = async (req, res) => {
     const user = await prisma.user.findUnique({
       where: { username },
     });
-
     if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
 
     // CHECK IF THE PASSWORD IS CORRECT

@@ -54,7 +54,7 @@ model PostDetail {
   school     Int?
   bus        Int?
   restaurant Int?
-  post       Post    @relation(fields: [postId], references: [id])
+  post       Post    @relation(fields: [postId], references: [id],onDelete: Cascade)
   postId     String  @unique @db.ObjectId
 }
 
